@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,22 +15,36 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.wear.tiles.material.Text
 import com.test.googlemapsjetpackcompose.navigation.AppScreens
+import com.test.googlemapsjetpackcompose.ui.theme.LightBlue
+import com.test.googlemapsjetpackcompose.ui.theme.Violet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,6 +64,9 @@ fun BodyContent(navController: NavController) {
     val context = LocalContext.current
     val dogImageIds = getDogImageIds(context = context)
 
+    // Crear un estado mutable para almacenar el ID de la imagen seleccionada.
+    var selectedImageId by remember { mutableStateOf(-1) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -65,22 +83,36 @@ fun BodyContent(navController: NavController) {
                     Image(
                         painter = painterResource(id = imageId),
                         contentDescription = null,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            // Añadir un clickable para cambiar el estado de selectedImageId al tocar la imagen.
+                            .clickable { if (selectedImageId != imageId) selectedImageId = imageId }
+                            // Aplicar un valor alfa para atenuar las imágenes no seleccionadas.
+                            .alpha(if (selectedImageId == -1 || selectedImageId == imageId) 1f else 0.4f)
                     )
                 }
             }
         }
 
-        // Utiliza Column para colocar el botón en la parte inferior y centrado horizontalmente.
+        //Botón en la parte inferior y centrado horizontalmente.
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = {
-                navController.navigate(route = AppScreens.SecondScreen.route)
-            }) {
-                Text("Iniciar")
+            Button(
+                onClick = {
+                    navController.navigate(route = AppScreens.SecondScreen.route)
+                },
+
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(50.dp),
+                enabled = selectedImageId != -1
+
+            ) {
+                Text("COMENZAR", fontSize= 20.sp)
             }
             Spacer(modifier = Modifier.height(60.dp))
         }
@@ -89,11 +121,19 @@ fun BodyContent(navController: NavController) {
 
 @Composable
 fun getDogImageIds(context: Context): List<Int> {
+    // Crea una lista mutable que almacenará los IDs de los recursos de imágenes de perros.
     val dogImageIds = mutableListOf<Int>()
+    // Usa un bucle para iterar a través de los números de imagen de 1 a 14.
     for (i in 1..14) {
+        // Crea el nombre de archivo de imagen a partir del número de imagen.
         val imageName = "perro$i"
+        // Obtiene el ID del recurso de imagen correspondiente al nombre de archivo de imagen utilizando el contexto.
         val resourceId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+        // Agrega el ID del recurso de imagen a la lista mutable.
         dogImageIds.add(resourceId)
     }
+    // Devuelve la lista de IDs de recursos de imágenes de perros.
     return dogImageIds
 }
+
+
