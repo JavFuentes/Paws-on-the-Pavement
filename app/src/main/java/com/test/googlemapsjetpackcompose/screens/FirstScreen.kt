@@ -3,12 +3,18 @@
 package com.test.googlemapsjetpackcompose.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -16,6 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,32 +34,57 @@ import com.test.googlemapsjetpackcompose.navigation.AppScreens
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun FirstScreen(navController: NavController) {
-    // Se utiliza Scaffold como el contenedor principal de la pantalla.
-    Scaffold { BodyContent(navController) }
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Scaffold() {
+            BodyContent(navController)
+        }
+    }
 }
-
 
 @Composable
 fun BodyContent(navController: NavController) {
-    // Column es un composable que organiza sus hijos en una columna vertical.
-    Column(
-        // El hijo ocupará todo el espacio disponible.
-        modifier = Modifier.fillMaxSize(),
-        // Los hijos se colocan en la parte inferior.
-        verticalArrangement = Arrangement.Bottom,
-        // Los hijos se centran horizontalmente.
-        horizontalAlignment = Alignment.CenterHorizontally
+    val context = LocalContext.current
+    val dogImageIds = getDogImageIds(context = context)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
     ) {
-        // Button es un composable que muestra un botón que el usuario puede hacer clic.
-        // onClick es la función que se ejecutará cuando el usuario haga clic en el botón.
-        // navController.navigate se utiliza para navegar a la siguiente pantalla.
-        Button(onClick = {
-            navController.navigate(route = AppScreens.SecondScreen.route)
-        }) {
-            // El texto que se muestra en el botón.
-            Text("Iniciar")
+        LazyColumn {
+            items(dogImageIds) { imageId ->
+                Image(
+                    painter = painterResource(id = imageId),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
-        // Añade un espacio entre el botón y el borde inferior de la pantalla.
-        Spacer(modifier = Modifier.height(60.dp))
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(onClick = {
+                navController.navigate(route = AppScreens.SecondScreen.route)
+            }) {
+                Text("Iniciar")
+            }
+            Spacer(modifier = Modifier.height(60.dp))
+        }
     }
+}
+
+@Composable
+fun getDogImageIds(context: Context): List<Int> {
+    val dogImageIds = mutableListOf<Int>()
+    for (i in 1..14) {
+        val imageName = "perro$i"
+        val resourceId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+        dogImageIds.add(resourceId)
+    }
+    return dogImageIds
 }

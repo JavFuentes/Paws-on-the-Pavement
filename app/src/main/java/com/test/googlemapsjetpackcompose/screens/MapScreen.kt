@@ -1,12 +1,18 @@
 package com.test.googlemapsjetpackcompose.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -44,17 +50,32 @@ fun MapScreen(navController: NavController) {
     // Definición de las opciones de UI del mapa usando el estado mutable
     val uiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = true)) }
 
-    // Composable que contiene el mapa de Google
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        properties = properties,
-        uiSettings = uiSettings
-    ) {
-        // Agregar un marcador al mapa
-        Marker(
-            position = marker,
-            title = "UNAB",
-            snippet = "Aquí estás realizando el bootcamp de Android"
-        )
+    // Composable que contiene el mapa de Google y los botones
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Mapa de Google
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            properties = properties,
+            uiSettings = uiSettings
+        ) {
+            // Agregar un marcador al mapa
+            Marker(
+                position = marker,
+                title = "UNAB",
+                snippet = "Aquí estás realizando el bootcamp de Android"
+            )
+        }
+
+        // Botones en la parte inferior
+        Row(
+            modifier = Modifier.align(Alignment.TopEnd),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { navController.popBackStack() }) {
+                Text("Atrás")
+            }
+
+        }
     }
 }
