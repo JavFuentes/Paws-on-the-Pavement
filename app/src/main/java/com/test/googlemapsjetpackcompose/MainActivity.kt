@@ -25,10 +25,12 @@ import com.test.googlemapsjetpackcompose.ui.theme.GoogleMapsJetpackComposeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Establece el contenido de la actividad con el composable AppNavigation.
         setContent {
             AppNavigation()
         }
     }
 }
+
 
 

@@ -18,8 +18,6 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.test.googlemapsjetpackcompose.ui.theme.GoogleMapsJetpackComposeTheme
 
-
-
 @Composable
 fun MapsDefaultPreview(navController: NavController){
     // Tema de Material Design
