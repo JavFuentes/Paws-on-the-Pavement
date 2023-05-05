@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,16 +54,24 @@ fun BodyContent(navController: NavController) {
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        LazyColumn {
-            items(dogImageIds) { imageId ->
-                Image(
-                    painter = painterResource(id = imageId),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
-                )
+        // Crea un Box que limita el tamaño para mostrar solo 3 elementos a la vez.
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.7f) // Ajusta este valor según el tamaño de tus elementos.
+        ) {
+            LazyColumn {
+                items(dogImageIds) { imageId ->
+                    Image(
+                        painter = painterResource(id = imageId),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
 
+        // Utiliza Column para colocar el botón en la parte inferior y centrado horizontalmente.
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
