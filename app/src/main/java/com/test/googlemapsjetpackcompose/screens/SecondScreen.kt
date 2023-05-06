@@ -6,7 +6,9 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,43 +49,57 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
         // Los hijos se centran horizontalmente.
         horizontalAlignment = Alignment.Start
     ) {
-        Column {
+        Row {
             // Muestra la imagen utilizando el avatarId
             if (avatarId != null) {
-                Image(
-                    painter = painterResource(id = avatarId.toInt()),
-                    contentDescription = "avatar",
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
-                        .align(Alignment.Start)
-                        .padding(start = 0.dp)
+                Box(modifier = Modifier.padding(start = 10.dp, top = 30.dp)) {
+                    Image(
+                        painter = painterResource(id = avatarId.toInt()),
+                        contentDescription = "avatar",
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(150.dp)
+                            .align(Alignment.TopStart)
+                    )
+                }
+            }
+
+            // Agrega el texto al lado derecho de la imagen y lo centra verticalmente
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = "Perro Callejero",
+                    color = Color.White,
+                    fontSize = 25.sp
                 )
             }
+        }
 
-            // Añade un espacio flexible para empujar el botón hacia abajo
-            Spacer(modifier = Modifier.weight(1f))
+        // Añade un espacio flexible para empujar el botón hacia abajo
+        Spacer(modifier = Modifier.weight(1f))
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(
+                onClick = {
+                    navController.navigate(route = AppScreens.MapScreen.route)
+                },
+                modifier = Modifier
+                    // Centrar el botón horizontalmente
+                    .width(200.dp)
+                    .height(50.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Button(
-                    onClick = {
-                        navController.navigate(route = AppScreens.MapScreen.route)
-                    },
-                    modifier = Modifier
-                        // Centrar el botón horizontalmente
-                        .width(200.dp)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    // El texto que se muestra en el botón.
-                    Text("ABRIR MAPA", fontSize = 20.sp)
-                }
-                // Añade un espacio entre el botón y el borde inferior de la pantalla.
-                Spacer(modifier = Modifier.height(60.dp))
+                // El texto que se muestra en el botón.
+                Text("ABRIR MAPA", fontSize = 20.sp)
             }
+            // Añade un espacio entre el botón y el borde inferior de la pantalla.
+            Spacer(modifier = Modifier.height(60.dp))
         }
     }
 }
