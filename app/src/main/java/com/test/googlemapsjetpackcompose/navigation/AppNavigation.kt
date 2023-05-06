@@ -10,13 +10,20 @@ import androidx.navigation.navArgument
 import com.test.googlemapsjetpackcompose.screens.FirstScreen
 import com.test.googlemapsjetpackcompose.screens.SecondScreen
 import com.test.googlemapsjetpackcompose.screens.MapScreen
+import com.test.googlemapsjetpackcompose.screens.SplashScreen
 
 @Composable
 fun AppNavigation() {
     // Creamos el NavController con el cual se realizará la navegación entre las pantallas.
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = AppScreens.FirstScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
+
         // Definimos la pantalla inicial de nuestra app.
+        composable(route = AppScreens.SplashScreen.route) {
+            SplashScreen(navController)
+        }
+
+        // Definimos la primera pantalla de nuestra app.
         composable(route = AppScreens.FirstScreen.route) {
             FirstScreen(navController)
         }
