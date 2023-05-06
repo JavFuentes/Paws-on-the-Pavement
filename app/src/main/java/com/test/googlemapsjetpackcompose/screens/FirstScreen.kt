@@ -4,6 +4,7 @@ package com.test.googlemapsjetpackcompose.screens
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +41,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.wear.tiles.material.Text
 import com.test.googlemapsjetpackcompose.navigation.AppScreens
 import com.test.googlemapsjetpackcompose.ui.theme.LightBlue
@@ -50,6 +53,7 @@ import com.test.googlemapsjetpackcompose.ui.theme.Violet
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun FirstScreen(navController: NavController) {
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -62,7 +66,7 @@ fun FirstScreen(navController: NavController) {
 @Composable
 fun BodyContent(navController: NavController) {
     val context = LocalContext.current
-    val dogImageIds = getDogImageIds(context = context)
+    val dogImageIds = getDogAvatarIds(context = context)
 
     // Crear un estado mutable para almacenar el ID de la imagen seleccionada.
     var selectedImageId by remember { mutableStateOf(-1) }
@@ -100,16 +104,26 @@ fun BodyContent(navController: NavController) {
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (selectedImageId == -1) {
+                Text(
+                    text = "Seleccione un avatar para comenzar",
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = Color.White,
+                    fontSize= 20.sp
+                )
+            }
+            Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
-                    navController.navigate(route = AppScreens.SecondScreen.route)
+                    navController.navigate(
+                        route = AppScreens.SecondScreen.route + "/$selectedImageId")
                 },
 
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .width(200.dp)
                     .height(50.dp),
-                enabled = selectedImageId != -1
+                enabled = selectedImageId != -1,
 
             ) {
                 Text("COMENZAR", fontSize= 20.sp)
@@ -120,7 +134,7 @@ fun BodyContent(navController: NavController) {
 }
 
 @Composable
-fun getDogImageIds(context: Context): List<Int> {
+fun getDogAvatarIds(context: Context): List<Int> {
     // Crea una lista mutable que almacenará los IDs de los recursos de imágenes de perros.
     val dogImageIds = mutableListOf<Int>()
     // Usa un bucle para iterar a través de los números de imagen de 1 a 14.
