@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.test.googlemapsjetpackcompose.screens
+package com.test.pawsonthepavement.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.test.googlemapsjetpackcompose.navigation.AppScreens
+import com.test.pawsonthepavement.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

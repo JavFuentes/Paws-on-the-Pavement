@@ -1,4 +1,4 @@
-package com.test.googlemapsjetpackcompose.ui.theme
+package com.test.pawsonthepavement.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "GoogleMaps JetpackCompose"
+rootProject.name = "pawsonthepavement"
 include ':app'

@@ -1,4 +1,4 @@
-package com.test.googlemapsjetpackcompose
+package com.test.pawsonthepavement
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

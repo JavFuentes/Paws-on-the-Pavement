@@ -1,4 +1,4 @@
-package com.test.googlemapsjetpackcompose.ui.theme
+package com.test.pawsonthepavement.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

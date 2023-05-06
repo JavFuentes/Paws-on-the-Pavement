@@ -1,6 +1,5 @@
-package com.test.googlemapsjetpackcompose.screens
+package com.test.pawsonthepavement.screens
 
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.test.googlemapsjetpackcompose.R
-import com.test.googlemapsjetpackcompose.navigation.AppScreens
+import com.test.pawsonthepavement.navigation.AppScreens
 import kotlinx.coroutines.delay
 
 @Composable

@@ -1,4 +1,4 @@
-package com.test.googlemapsjetpackcompose
+package com.test.pawsonthepavement
 
 import org.junit.Test
 

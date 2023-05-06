@@ -1,4 +1,4 @@
-package com.test.googlemapsjetpackcompose.navigation
+package com.test.pawsonthepavement.navigation
 
 // Clase sellada (sealed class) que define todas las pantallas de la app.
 // Cada objeto (object) representa una pantalla y tiene una propiedad "route" que indica su ruta.

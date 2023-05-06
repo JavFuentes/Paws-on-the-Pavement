@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.GoogleMapsJetpackCompose" parent="android:Theme.Material.Light.NoActionBar" >
+    <style name="Theme.PawsOnThePavement" parent="android:Theme.Material.Light.NoActionBar" >
         <!-- La barra de estado es negra -->
         <item name="android:statusBarColor">@color/black</item>
     </style>

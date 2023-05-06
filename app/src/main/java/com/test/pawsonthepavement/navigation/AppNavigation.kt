@@ -1,16 +1,15 @@
-package com.test.googlemapsjetpackcompose.navigation
+package com.test.pawsonthepavement.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavArgument
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.test.googlemapsjetpackcompose.screens.FirstScreen
-import com.test.googlemapsjetpackcompose.screens.SecondScreen
-import com.test.googlemapsjetpackcompose.screens.MapScreen
-import com.test.googlemapsjetpackcompose.screens.SplashScreen
+import com.test.pawsonthepavement.screens.FirstScreen
+import com.test.pawsonthepavement.screens.SecondScreen
+import com.test.pawsonthepavement.screens.MapScreen
+import com.test.pawsonthepavement.screens.SplashScreen
 
 @Composable
 fun AppNavigation() {
