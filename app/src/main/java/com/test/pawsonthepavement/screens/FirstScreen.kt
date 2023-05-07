@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.test.pawsonthepavement.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,19 +107,26 @@ fun BodyContent(navController: NavController) {
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
-                    navController.navigate(
-                        route = AppScreens.SecondScreen.route + "/$selectedImageId")
-                },
+                    val route = AppScreens.SecondScreen.route + "/$selectedImageId"
 
+                    // Crear opciones de navegación para reemplazar el back stack
+                    // [CAMBIAR LA FUNCIÓN DEL BACK STACK]
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(AppScreens.FirstScreen.route, inclusive = true)
+                        .build()
+
+                    // Navegar a SecondScreen utilizando las opciones de navegación
+                    navController.navigate(route, navOptions)
+                },
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .width(200.dp)
                     .height(50.dp),
                 enabled = selectedImageId != -1,
-
             ) {
                 Text("COMENZAR", fontSize= 20.sp)
             }
+
             Spacer(modifier = Modifier.height(60.dp))
         }
     }
