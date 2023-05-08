@@ -17,10 +17,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,17 +72,13 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
                 }
             }
 
-            // Agrega el texto al lado derecho de la imagen y lo centra verticalmente
+            // Agrega el nombre al lado derecho de la imagen y lo centra verticalmente
             Box(
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                Text(
-                    text = "Perro Callejero",
-                    color = Color.White,
-                    fontSize = 25.sp
-                )
+                DropDownName()
             }
         }
 
@@ -100,6 +104,52 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
             }
             // Añade un espacio entre el botón y el borde inferior de la pantalla.
             Spacer(modifier = Modifier.height(60.dp))
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropDownName(modifier: Modifier = Modifier) {
+    var isExpanded by remember { mutableStateOf(false) }
+
+    val list = listOf("Perro callejero", "Perro vago", "Perro abandonado")
+
+    var name by remember { mutableStateOf(list[0]) }
+
+    Column(
+        modifier = Modifier.fillMaxSize())
+    {
+        ExposedDropdownMenuBox(
+            expanded = isExpanded,
+            onExpandedChange = { isExpanded = it }
+        ) {
+            TextField(
+                value = name,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                modifier = Modifier.menuAnchor()
+            )
+
+            ExposedDropdownMenu(
+                expanded = isExpanded,
+                onDismissRequest = { isExpanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { "Male" },
+                    onClick = { name = "Male"
+                        isExpanded = false}
+                )
+                DropdownMenuItem(
+                    text = { "Female" },
+                    onClick = { name = "Female"
+                        isExpanded = false}
+                )
+            }
         }
     }
 }
