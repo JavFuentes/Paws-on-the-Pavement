@@ -75,7 +75,7 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
             // Agrega el nombre al lado derecho de la imagen y lo centra verticalmente
             Box(
                 modifier = Modifier
-                    .padding(start = 10.dp)
+                    .padding(top = 20.dp, end = 20.dp)
                     .align(Alignment.CenterVertically)
             ) {
                 DropDownName()
@@ -110,46 +110,53 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropDownName(modifier: Modifier = Modifier) {
+fun DropDownName() {
+    // Se crea un estado para controlar si el menú está expandido o no
     var isExpanded by remember { mutableStateOf(false) }
 
+    // Lista de nombres que aparecerán en el menú desplegable
     val list = listOf("Perro callejero", "Perro vago", "Perro abandonado")
 
+    // Se crea un estado para almacenar el nombre seleccionado
     var name by remember { mutableStateOf(list[0]) }
 
-    Column(
-        modifier = Modifier.fillMaxSize())
-    {
-        ExposedDropdownMenuBox(
-            expanded = isExpanded,
-            onExpandedChange = { isExpanded = it }
-        ) {
-            TextField(
-                value = name,
-                onValueChange = {},
-                readOnly = true,
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
-                },
-                colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                modifier = Modifier.menuAnchor()
-            )
+    // Se crea el ExposedDropdownMenuBox que contiene el TextField y el menú desplegable
+    ExposedDropdownMenuBox(
+        expanded = isExpanded,
+        onExpandedChange = { isExpanded = it }
+    ) {
+        // Se crea el TextField que muestra el nombre seleccionado
+        TextField(
+            value = name,
+            onValueChange = {},
+            readOnly = true,
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.menuAnchor()
+        )
 
-            ExposedDropdownMenu(
-                expanded = isExpanded,
-                onDismissRequest = { isExpanded = false }
+        // Se crea el ExposedDropdownMenu que contiene los elementos del menú
+        ExposedDropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false },
+
             ) {
+            // Itera sobre la lista de nombres y crea un DropdownMenuItem para cada uno
+            list.forEach { nombre ->
                 DropdownMenuItem(
-                    text = { "Male" },
-                    onClick = { name = "Male"
-                        isExpanded = false}
-                )
-                DropdownMenuItem(
-                    text = { "Female" },
-                    onClick = { name = "Female"
-                        isExpanded = false}
+                    // Muestra el nombre como texto dentro del elemento del menú
+                    { Text(text = nombre) },
+                    // Cuando se hace clic en un elemento del menú, se actualiza el estado de "name" y se cierra el menú
+                    onClick = {
+                        name = nombre
+                        isExpanded = false
+                    }
                 )
             }
         }
     }
 }
+
+
