@@ -17,10 +17,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,17 +72,13 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
                 }
             }
 
-            // Agrega el texto al lado derecho de la imagen y lo centra verticalmente
+            // Agrega el nombre al lado derecho de la imagen y lo centra verticalmente
             Box(
                 modifier = Modifier
-                    .padding(start = 10.dp)
+                    .padding(top = 20.dp, end = 20.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                Text(
-                    text = "Perro Callejero",
-                    color = Color.White,
-                    fontSize = 25.sp
-                )
+                DropDownName()
             }
         }
 
@@ -103,3 +107,56 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropDownName() {
+    // Se crea un estado para controlar si el menú está expandido o no
+    var isExpanded by remember { mutableStateOf(false) }
+
+    // Lista de nombres que aparecerán en el menú desplegable
+    val list = listOf("Perro callejero", "Perro vago", "Perro abandonado")
+
+    // Se crea un estado para almacenar el nombre seleccionado
+    var name by remember { mutableStateOf(list[0]) }
+
+    // Se crea el ExposedDropdownMenuBox que contiene el TextField y el menú desplegable
+    ExposedDropdownMenuBox(
+        expanded = isExpanded,
+        onExpandedChange = { isExpanded = it }
+    ) {
+        // Se crea el TextField que muestra el nombre seleccionado
+        TextField(
+            value = name,
+            onValueChange = {},
+            readOnly = true,
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.menuAnchor()
+        )
+
+        // Se crea el ExposedDropdownMenu que contiene los elementos del menú
+        ExposedDropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false },
+
+            ) {
+            // Itera sobre la lista de nombres y crea un DropdownMenuItem para cada uno
+            list.forEach { nombre ->
+                DropdownMenuItem(
+                    // Muestra el nombre como texto dentro del elemento del menú
+                    { Text(text = nombre) },
+                    // Cuando se hace clic en un elemento del menú, se actualiza el estado de "name" y se cierra el menú
+                    onClick = {
+                        name = nombre
+                        isExpanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+
