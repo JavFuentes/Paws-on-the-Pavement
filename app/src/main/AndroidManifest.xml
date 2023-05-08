@@ -5,14 +5,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PawsOnThePavement"
         tools:targetApi="31">
@@ -20,7 +19,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC9JfbcrpvSBUfAiJvj0fKOQiBkc4q1IDI"/>
-
+        <meta-data
+            android:name="android.app.icon"
+            android:resource="@drawable/icon_app" />
         <activity
             android:name="com.test.pawsonthepavement.MainActivity"
             android:exported="true"
