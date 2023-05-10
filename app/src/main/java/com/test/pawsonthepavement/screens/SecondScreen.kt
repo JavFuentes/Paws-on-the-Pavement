@@ -58,21 +58,10 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
         horizontalAlignment = Alignment.Start
     ) {
         Row {
-            // Muestra la imagen utilizando el avatarId
-            if (avatarId != null) {
-                Box(modifier = Modifier.padding(start = 10.dp, top = 30.dp)) {
-                    Image(
-                        painter = painterResource(id = avatarId.toInt()),
-                        contentDescription = "avatar",
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(150.dp)
-                            .align(Alignment.TopStart)
-                    )
-                }
-            }
+            //Avatar
+            AvatarImage(avatarId)
 
-            // Agrega el nombre al lado derecho de la imagen y lo centra verticalmente
+            // Agrega el dropdown del nombre al lado derecho de la imagen y lo centra verticalmente
             Box(
                 modifier = Modifier
                     .padding(top = 20.dp, end = 20.dp)
@@ -85,25 +74,50 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
         // Añade un espacio flexible para empujar el botón hacia abajo
         Spacer(modifier = Modifier.weight(1f))
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        // Botón que abre el mapa
+        MapButton(navController)
+
+    }
+}
+
+@Composable
+fun MapButton(navController: NavController){
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                navController.navigate(route = AppScreens.MapScreen.route)
+            },
+            modifier = Modifier
+                // Centrar el botón horizontalmente
+                .width(200.dp)
+                .height(50.dp),
+            shape = RoundedCornerShape(8.dp)
         ) {
-            Button(
-                onClick = {
-                    navController.navigate(route = AppScreens.MapScreen.route)
-                },
+            // El texto que se muestra en el botón.
+            Text("ABRIR MAPA", fontSize = 20.sp)
+        }
+        // Añade un espacio entre el botón y el borde inferior de la pantalla.
+        Spacer(modifier = Modifier.height(60.dp))
+    }
+}
+
+
+@Composable
+fun AvatarImage(avatarId: String?){
+    // Muestra la imagen utilizando el avatarId
+    if (avatarId != null) {
+        Box(modifier = Modifier.padding(start = 10.dp, top = 30.dp)) {
+            Image(
+                painter = painterResource(id = avatarId.toInt()),
+                contentDescription = "avatar",
                 modifier = Modifier
-                    // Centrar el botón horizontalmente
-                    .width(200.dp)
-                    .height(50.dp),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                // El texto que se muestra en el botón.
-                Text("ABRIR MAPA", fontSize = 20.sp)
-            }
-            // Añade un espacio entre el botón y el borde inferior de la pantalla.
-            Spacer(modifier = Modifier.height(60.dp))
+                    .width(150.dp)
+                    .height(150.dp)
+                    .align(Alignment.TopStart)
+            )
         }
     }
 }
