@@ -13,7 +13,7 @@ import com.test.pawsonthepavement.screens.SplashScreen
 
 @Composable
 fun AppNavigation() {
-    // Creamos el NavController con el cual se realizará la navegación entre las pantallas.
+
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
 

@@ -79,7 +79,7 @@ fun MapScreen(navController: NavController) {
     }
 
     // Definición de una ubicación para el marcador del mapa
-    val unab = LatLng(-33.02697881819879, -71.54051976575631)
+    val unab = LatLng(-33.0131018380383, -71.5414731476765)
 
     // Definición de las propiedades del mapa usando el estado mutable
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.HYBRID)) }

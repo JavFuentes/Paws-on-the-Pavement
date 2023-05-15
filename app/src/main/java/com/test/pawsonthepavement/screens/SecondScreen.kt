@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -76,7 +77,6 @@ fun SecondBodyContent(navController: NavController, avatarId: String?) {
 
         // Botón que abre el mapa
         MapButton(navController)
-
     }
 }
 
@@ -94,7 +94,14 @@ fun MapButton(navController: NavController){
                 // Centrar el botón horizontalmente
                 .width(200.dp)
                 .height(50.dp),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
+            //colors = ButtonDefaults.buttonColors(
+                //contentColor = Color(0xFFF0EEEF),
+                //containerColor = Color(0xFFF0EEEF),
+                //disabledContainerColor = Color(0xFFF0EEEF),
+                //disabledContentColor = Color(0xFFF0EEEF)
+            //)
+
         ) {
             // El texto que se muestra en el botón.
             Text("ABRIR MAPA", fontSize = 20.sp)
@@ -103,7 +110,6 @@ fun MapButton(navController: NavController){
         Spacer(modifier = Modifier.height(60.dp))
     }
 }
-
 
 @Composable
 fun AvatarImage(avatarId: String?){
